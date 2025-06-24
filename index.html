@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Iryleph</title>
+    <title>Iryleph - 개인 블로그</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
     <style>
         :root {
-            --primary-blue: #578FCA;
+            --primary-color: #578FCA;
             --sky-blue: #87CEEB;
             --white: #FFFFFF;
             --light-gray: #F8F9FA;
-            --dark-gray: #1A1A1A;
-            --darker-gray: #0F0F0F;
-            --text-light: #333333;
-            --text-dark: #E0E0E0;
-            --border-light: #E5E5E5;
-            --border-dark: #333333;
-            --shadow-light: rgba(87, 143, 202, 0.1);
-            --shadow-dark: rgba(0, 0, 0, 0.3);
+            --text-dark: #2C3E50;
+            --text-light: #6C757D;
+            --shadow: rgba(87, 143, 202, 0.1);
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="dark"] {
+            --white: #1a1a1a;
+            --light-gray: #2d2d2d;
+            --text-dark: #E9ECEF;
+            --text-light: #ADB5BD;
+            --shadow: rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -32,15 +37,10 @@
 
         body {
             font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            line-height: 1.6;
-            color: var(--text-light);
             background-color: var(--white);
-            transition: all 0.3s ease;
-        }
-
-        body.dark-mode {
             color: var(--text-dark);
-            background-color: var(--dark-gray);
+            line-height: 1.6;
+            transition: var(--transition);
         }
 
         .container {
@@ -52,16 +52,11 @@
         /* Header */
         header {
             background-color: var(--white);
-            border-bottom: 1px solid var(--border-light);
+            border-bottom: 1px solid var(--light-gray);
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: all 0.3s ease;
-        }
-
-        body.dark-mode header {
-            background-color: var(--darker-gray);
-            border-bottom-color: var(--border-dark);
+            transition: var(--transition);
         }
 
         .header-content {
@@ -74,9 +69,9 @@
         .logo {
             font-size: 1.8rem;
             font-weight: 700;
-            color: var(--primary-blue);
+            color: var(--primary-color);
             text-decoration: none;
-            transition: color 0.3s ease;
+            transition: var(--transition);
         }
 
         .logo:hover {
@@ -85,107 +80,84 @@
 
         .theme-toggle {
             background: none;
-            border: 2px solid var(--primary-blue);
-            color: var(--primary-blue);
-            padding: 0.5rem 1rem;
-            border-radius: 50px;
+            border: 2px solid var(--primary-color);
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 50%;
             cursor: pointer;
-            font-family: inherit;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
+            font-size: 1.2rem;
+            transition: var(--transition);
+            width: 45px;
+            height: 45px;
             display: flex;
             align-items: center;
-            gap: 0.5rem;
+            justify-content: center;
         }
 
         .theme-toggle:hover {
-            background-color: var(--primary-blue);
+            background-color: var(--primary-color);
             color: var(--white);
-        }
-
-        body.dark-mode .theme-toggle {
-            border-color: var(--sky-blue);
-            color: var(--sky-blue);
-        }
-
-        body.dark-mode .theme-toggle:hover {
-            background-color: var(--sky-blue);
-            color: var(--dark-gray);
+            transform: scale(1.1);
         }
 
         /* Main Content */
         main {
             padding: 2rem 0;
-            min-height: calc(100vh - 120px);
         }
 
-        .hero {
+        .blog-title {
             text-align: center;
             margin-bottom: 3rem;
-            padding: 2rem 0;
         }
 
-        .hero h1 {
-            font-size: 2.5rem;
+        .blog-title h1 {
+            font-size: 3rem;
             font-weight: 700;
-            color: var(--primary-blue);
-            margin-bottom: 1rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
         }
 
-        .hero p {
-            font-size: 1.1rem;
+        .blog-title p {
+            font-size: 1.2rem;
             color: var(--text-light);
-            opacity: 0.8;
+            font-weight: 400;
         }
 
-        body.dark-mode .hero p {
-            color: var(--text-dark);
-        }
-
-        /* Search Bar */
-        .search-container {
+        /* Search */
+        .search-section {
             margin-bottom: 3rem;
+        }
+
+        .search-container {
             position: relative;
+            max-width: 500px;
+            margin: 0 auto;
         }
 
         .search-input {
             width: 100%;
-            max-width: 500px;
-            margin: 0 auto;
-            padding: 1rem 1.5rem;
+            padding: 1rem 1rem 1rem 3rem;
+            border: 2px solid var(--light-gray);
+            border-radius: 25px;
             font-size: 1rem;
-            border: 2px solid var(--border-light);
-            border-radius: 50px;
+            font-family: 'Pretendard', sans-serif;
             background-color: var(--white);
-            color: var(--text-light);
-            font-family: inherit;
-            transition: all 0.3s ease;
-            display: block;
+            color: var(--text-dark);
+            transition: var(--transition);
         }
 
         .search-input:focus {
             outline: none;
-            border-color: var(--primary-blue);
-            box-shadow: 0 0 0 3px var(--shadow-light);
-        }
-
-        body.dark-mode .search-input {
-            background-color: var(--darker-gray);
-            border-color: var(--border-dark);
-            color: var(--text-dark);
-        }
-
-        body.dark-mode .search-input:focus {
-            border-color: var(--sky-blue);
-            box-shadow: 0 0 0 3px rgba(135, 206, 235, 0.2);
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(87, 143, 202, 0.1);
         }
 
         .search-icon {
             position: absolute;
-            right: 1.5rem;
+            left: 1rem;
             top: 50%;
             transform: translateY(-50%);
-            color: var(--primary-blue);
+            color: var(--text-light);
             font-size: 1.1rem;
         }
 
@@ -199,126 +171,100 @@
 
         .post-card {
             background-color: var(--white);
-            border: 1px solid var(--border-light);
-            border-radius: 12px;
-            overflow: hidden;
-            transition: all 0.3s ease;
-            cursor: pointer;
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            transition: var(--transition);
+            border: 1px solid var(--light-gray);
         }
 
         .post-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px var(--shadow-light);
-            border-color: var(--primary-blue);
-        }
-
-        body.dark-mode .post-card {
-            background-color: var(--darker-gray);
-            border-color: var(--border-dark);
-        }
-
-        body.dark-mode .post-card:hover {
-            box-shadow: 0 10px 30px var(--shadow-dark);
-            border-color: var(--sky-blue);
-        }
-
-        .post-image {
-            width: 100%;
-            height: 200px;
-            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--white);
-            font-size: 3rem;
-        }
-
-        .post-content {
-            padding: 1.5rem;
-        }
-
-        .post-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: var(--text-light);
-            margin-bottom: 0.5rem;
-            line-height: 1.4;
-        }
-
-        body.dark-mode .post-title {
-            color: var(--text-dark);
-        }
-
-        .post-excerpt {
-            color: var(--text-light);
-            opacity: 0.7;
-            margin-bottom: 1rem;
-            font-size: 0.9rem;
-            line-height: 1.5;
-        }
-
-        body.dark-mode .post-excerpt {
-            color: var(--text-dark);
+            box-shadow: 0 8px 30px var(--shadow);
         }
 
         .post-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.8rem;
-            color: var(--primary-blue);
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
         }
 
-        body.dark-mode .post-meta {
-            color: var(--sky-blue);
+        .post-date {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .post-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .post-title a {
+            color: inherit;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .post-title a:hover {
+            color: var(--primary-color);
+        }
+
+        .post-excerpt {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            line-height: 1.6;
         }
 
         .post-tags {
             display: flex;
+            flex-wrap: wrap;
             gap: 0.5rem;
         }
 
         .tag {
             background-color: var(--sky-blue);
             color: var(--white);
-            padding: 0.2rem 0.6rem;
+            padding: 0.3rem 0.8rem;
             border-radius: 15px;
-            font-size: 0.7rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
-        body.dark-mode .tag {
-            background-color: var(--primary-blue);
-        }
-
-        /* No Results */
-        .no-results {
+        /* Loading & Error States */
+        .loading {
             text-align: center;
             padding: 3rem 0;
             color: var(--text-light);
-            opacity: 0.6;
-            display: none;
         }
 
-        body.dark-mode .no-results {
-            color: var(--text-dark);
+        .loading i {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            animation: spin 1s linear infinite;
         }
 
-        /* Footer */
-        footer {
-            background-color: var(--light-gray);
-            border-top: 1px solid var(--border-light);
-            padding: 2rem 0;
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .error {
             text-align: center;
+            padding: 3rem 0;
             color: var(--text-light);
-            opacity: 0.7;
-            transition: all 0.3s ease;
         }
 
-        body.dark-mode footer {
-            background-color: var(--darker-gray);
-            border-top-color: var(--border-dark);
-            color: var(--text-dark);
+        .no-posts {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--text-light);
         }
 
         /* Responsive Design */
@@ -327,11 +273,11 @@
                 padding: 0 15px;
             }
 
-            .hero h1 {
-                font-size: 2rem;
+            .blog-title h1 {
+                font-size: 2.5rem;
             }
 
-            .hero p {
+            .blog-title p {
                 font-size: 1rem;
             }
 
@@ -340,9 +286,12 @@
                 gap: 1.5rem;
             }
 
+            .post-card {
+                padding: 1.25rem;
+            }
+
             .header-content {
-                flex-direction: column;
-                gap: 1rem;
+                padding: 0.75rem 0;
             }
 
             .logo {
@@ -351,44 +300,18 @@
         }
 
         @media (max-width: 480px) {
-            .hero {
-                padding: 1rem 0;
-            }
-
-            .hero h1 {
-                font-size: 1.8rem;
+            .blog-title h1 {
+                font-size: 2rem;
             }
 
             .search-input {
-                padding: 0.8rem 1rem;
-                font-size: 0.9rem;
+                padding: 0.875rem 0.875rem 0.875rem 2.5rem;
             }
 
-            .post-content {
-                padding: 1rem;
-            }
-        }
-
-        /* Animations */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
+            .search-icon {
+                left: 0.875rem;
             }
         }
-
-        .post-card {
-            animation: fadeInUp 0.6s ease forwards;
-        }
-
-        .post-card:nth-child(1) { animation-delay: 0.1s; }
-        .post-card:nth-child(2) { animation-delay: 0.2s; }
-        .post-card:nth-child(3) { animation-delay: 0.3s; }
-        .post-card:nth-child(4) { animation-delay: 0.4s; }
     </style>
 </head>
 <body>
@@ -397,8 +320,7 @@
             <div class="header-content">
                 <a href="#" class="logo">Iryleph</a>
                 <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon" id="themeIcon"></i>
-                    <span id="themeText">다크 모드</span>
+                    <i class="fas fa-moon"></i>
                 </button>
             </div>
         </div>
@@ -406,224 +328,217 @@
 
     <main>
         <div class="container">
-            <section class="hero">
-                <h1>Iryleph's Blog</h1>
-                <p>생각과 경험을 나누는 개인적인 공간입니다</p>
-            </section>
+            <div class="blog-title">
+                <h1>Iryleph</h1>
+                <p>개발과 일상의 기록</p>
+            </div>
 
-            <section class="search-container">
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    id="searchInput" 
-                    placeholder="포스트 검색..."
-                >
-                <i class="fas fa-search search-icon"></i>
-            </section>
-
-            <section class="posts-section">
-                <div class="posts-grid" id="postsGrid">
-                    <article class="post-card" data-title="첫 번째 포스트" data-content="블로그를 시작하며 첫 포스트를 작성해봅니다" data-tags="시작 일상">
-                        <div class="post-image">
-                            <i class="fas fa-rocket"></i>
-                        </div>
-                        <div class="post-content">
-                            <h3 class="post-title">첫 번째 포스트</h3>
-                            <p class="post-excerpt">블로그를 시작하며 첫 포스트를 작성해봅니다. 앞으로 다양한 주제들에 대해 이야기해보려고 합니다.</p>
-                            <div class="post-meta">
-                                <span class="post-date">2024.01.24</span>
-                                <div class="post-tags">
-                                    <span class="tag">시작</span>
-                                    <span class="tag">일상</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="post-card" data-title="웹 개발 이야기" data-content="프론트엔드 개발 경험과 배운 점들을 공유" data-tags="개발 웹 프론트엔드">
-                        <div class="post-image">
-                            <i class="fas fa-code"></i>
-                        </div>
-                        <div class="post-content">
-                            <h3 class="post-title">웹 개발 이야기</h3>
-                            <p class="post-excerpt">프론트엔드 개발 경험과 배운 점들을 공유합니다. HTML, CSS, JavaScript 학습 과정에서 겪은 시행착오들.</p>
-                            <div class="post-meta">
-                                <span class="post-date">2024.01.20</span>
-                                <div class="post-tags">
-                                    <span class="tag">개발</span>
-                                    <span class="tag">웹</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="post-card" data-title="독서 노트" data-content="최근 읽은 책들에 대한 감상과 인사이트" data-tags="독서 책 리뷰">
-                        <div class="post-image">
-                            <i class="fas fa-book"></i>
-                        </div>
-                        <div class="post-content">
-                            <h3 class="post-title">독서 노트</h3>
-                            <p class="post-excerpt">최근 읽은 책들에 대한 감상과 인사이트를 정리합니다. 좋은 문장들과 떠오른 생각들을 기록해봅니다.</p>
-                            <div class="post-meta">
-                                <span class="post-date">2024.01.18</span>
-                                <div class="post-tags">
-                                    <span class="tag">독서</span>
-                                    <span class="tag">리뷰</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
-
-                    <article class="post-card" data-title="일상의 작은 발견" data-content="평범한 하루 속에서 찾은 소중한 순간들" data-tags="일상 생각 순간">
-                        <div class="post-image">
-                            <i class="fas fa-lightbulb"></i>
-                        </div>
-                        <div class="post-content">
-                            <h3 class="post-title">일상의 작은 발견</h3>
-                            <p class="post-excerpt">평범한 하루 속에서 찾은 소중한 순간들을 기록합니다. 작은 것들에서 느끼는 행복과 깨달음들.</p>
-                            <div class="post-meta">
-                                <span class="post-date">2024.01.15</span>
-                                <div class="post-tags">
-                                    <span class="tag">일상</span>
-                                    <span class="tag">생각</span>
-                                </div>
-                            </div>
-                        </div>
-                    </article>
+            <div class="search-section">
+                <div class="search-container">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" id="searchInput" placeholder="포스트 검색...">
                 </div>
+            </div>
 
-                <div class="no-results" id="noResults">
-                    <i class="fas fa-search" style="font-size: 2rem; margin-bottom: 1rem; opacity: 0.5;"></i>
-                    <p>검색 결과가 없습니다.</p>
+            <div id="postsContainer">
+                <div class="loading">
+                    <i class="fas fa-spinner"></i>
+                    <p>포스트를 불러오는 중...</p>
                 </div>
-            </section>
+            </div>
         </div>
     </main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2024 Iryleph. All rights reserved.</p>
-        </div>
-    </footer>
-
     <script>
-        // 다크 모드 기능
+        // Theme Management
         const themeToggle = document.getElementById('themeToggle');
-        const themeIcon = document.getElementById('themeIcon');
-        const themeText = document.getElementById('themeText');
         const body = document.body;
+        const themeIcon = themeToggle.querySelector('i');
 
-        // 로컬 스토리지에서 테마 설정 로드
-        const savedTheme = localStorage.getItem('theme');
-        if (savedTheme === 'dark') {
-            enableDarkMode();
-        }
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        setTheme(savedTheme);
 
-        // 다크 모드 활성화
-        function enableDarkMode() {
-            body.classList.add('dark-mode');
-            themeIcon.className = 'fas fa-sun';
-            themeText.textContent = '라이트 모드';
-            localStorage.setItem('theme', 'dark');
-        }
-
-        // 다크 모드 비활성화
-        function disableDarkMode() {
-            body.classList.remove('dark-mode');
-            themeIcon.className = 'fas fa-moon';
-            themeText.textContent = '다크 모드';
-            localStorage.setItem('theme', 'light');
-        }
-
-        // 테마 토글 버튼 이벤트
         themeToggle.addEventListener('click', () => {
-            if (body.classList.contains('dark-mode')) {
-                disableDarkMode();
-            } else {
-                enableDarkMode();
-            }
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            setTheme(newTheme);
+            localStorage.setItem('theme', newTheme);
         });
 
-        // 시스템 테마 변경 감지
-        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
-            if (!localStorage.getItem('theme')) {
-                if (e.matches) {
-                    enableDarkMode();
-                } else {
-                    disableDarkMode();
-                }
+        function setTheme(theme) {
+            body.setAttribute('data-theme', theme);
+            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        }
+
+        // Posts Management
+        let allPosts = [];
+        let displayedPosts = [];
+
+        // Sample posts data (replace with actual markdown loading)
+        const samplePosts = [
+            {
+                title: "첫 번째 포스트",
+                date: "2024-01-15",
+                excerpt: "블로그를 시작하게 된 계기와 앞으로의 계획에 대해 이야기합니다.",
+                tags: ["일상", "시작"],
+                filename: "first-post.md"
+            },
+            {
+                title: "JavaScript 비동기 처리 완벽 가이드",
+                date: "2024-01-10",
+                excerpt: "Promise, async/await, 그리고 비동기 처리의 모든 것을 다룹니다.",
+                tags: ["JavaScript", "개발", "비동기"],
+                filename: "javascript-async.md"
+            },
+            {
+                title: "React 성능 최적화 팁",
+                date: "2024-01-05",
+                excerpt: "React 애플리케이션의 성능을 향상시키는 다양한 방법들을 소개합니다.",
+                tags: ["React", "성능", "최적화"],
+                filename: "react-optimization.md"
+            },
+            {
+                title: "웹 접근성의 중요성",
+                date: "2024-01-01",
+                excerpt: "모든 사용자가 웹을 이용할 수 있도록 하는 웹 접근성에 대해 알아봅니다.",
+                tags: ["접근성", "웹개발", "UX"],
+                filename: "web-accessibility.md"
             }
-        });
+        ];
 
-        // 검색 기능
-        const searchInput = document.getElementById('searchInput');
-        const postsGrid = document.getElementById('postsGrid');
-        const noResults = document.getElementById('noResults');
-        const postCards = document.querySelectorAll('.post-card');
-
-        function performSearch() {
-            const searchTerm = searchInput.value.toLowerCase().trim();
-            let visiblePosts = 0;
-
-            postCards.forEach(card => {
-                const title = card.dataset.title.toLowerCase();
-                const content = card.dataset.content.toLowerCase();
-                const tags = card.dataset.tags.toLowerCase();
-
-                if (searchTerm === '' || 
-                    title.includes(searchTerm) || 
-                    content.includes(searchTerm) || 
-                    tags.includes(searchTerm)) {
-                    card.style.display = 'block';
-                    visiblePosts++;
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // 검색 결과가 없을 때 메시지 표시
-            if (visiblePosts === 0 && searchTerm !== '') {
-                noResults.style.display = 'block';
-                postsGrid.style.display = 'none';
-            } else {
-                noResults.style.display = 'none';
-                postsGrid.style.display = 'grid';
+        // Load posts from markdown files
+        async function loadPosts() {
+            const postsContainer = document.getElementById('postsContainer');
+            
+            try {
+                // In a real implementation, you would fetch the list of markdown files
+                // from your posts directory. For now, we'll use the sample data
+                allPosts = samplePosts;
+                displayedPosts = [...allPosts];
+                
+                // Sort by date (newest first)
+                displayedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // Show only 4 most recent posts
+                displayedPosts = displayedPosts.slice(0, 4);
+                
+                renderPosts();
+                
+            } catch (error) {
+                console.error('Error loading posts:', error);
+                postsContainer.innerHTML = `
+                    <div class="error">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <p>포스트를 불러오는 중 오류가 발생했습니다.</p>
+                        <p>posts 폴더에 마크다운 파일이 있는지 확인해주세요.</p>
+                    </div>
+                `;
             }
         }
 
-        // 실시간 검색
-        searchInput.addEventListener('input', performSearch);
-
-        // Enter 키로 검색
-        searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                performSearch();
+        // Render posts
+        function renderPosts() {
+            const postsContainer = document.getElementById('postsContainer');
+            
+            if (displayedPosts.length === 0) {
+                postsContainer.innerHTML = `
+                    <div class="no-posts">
+                        <i class="fas fa-file-alt"></i>
+                        <p>검색 결과가 없습니다.</p>
+                    </div>
+                `;
+                return;
             }
-        });
 
-        // 포스트 카드 클릭 이벤트
-        postCards.forEach(card => {
-            card.addEventListener('click', () => {
-                const title = card.dataset.title;
-                alert(`"${title}" 포스트를 클릭했습니다.\n실제 구현에서는 해당 포스트 페이지로 이동합니다.`);
-            });
-        });
+            const postsHTML = displayedPosts.map(post => `
+                <div class="post-card">
+                    <div class="post-meta">
+                        <div class="post-date">
+                            <i class="fas fa-calendar-alt"></i>
+                            ${formatDate(post.date)}
+                        </div>
+                    </div>
+                    <h2 class="post-title">
+                        <a href="./posts/${post.filename}">${post.title}</a>
+                    </h2>
+                    <p class="post-excerpt">${post.excerpt}</p>
+                    <div class="post-tags">
+                        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                </div>
+            `).join('');
 
-        // 스크롤 시 헤더 그림자 효과
-        window.addEventListener('scroll', () => {
-            const header = document.querySelector('header');
-            if (window.scrollY > 0) {
-                header.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            postsContainer.innerHTML = `<div class="posts-grid">${postsHTML}</div>`;
+        }
+
+        // Format date
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            return date.toLocaleDateString('ko-KR', options);
+        }
+
+        // Search functionality
+        const searchInput = document.getElementById('searchInput');
+        searchInput.addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            if (searchTerm === '') {
+                displayedPosts = [...allPosts].slice(0, 4);
             } else {
-                header.style.boxShadow = 'none';
+                displayedPosts = allPosts.filter(post => 
+                    post.title.toLowerCase().includes(searchTerm) ||
+                    post.excerpt.toLowerCase().includes(searchTerm) ||
+                    post.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
             }
+            
+            renderPosts();
         });
 
-        // 페이지 로드 시 애니메이션
-        window.addEventListener('load', () => {
-            document.querySelector('.hero').style.animation = 'fadeInUp 0.8s ease forwards';
-            document.querySelector('.search-container').style.animation = 'fadeInUp 0.8s ease 0.2s forwards';
-        });
+        // Load posts when page loads
+        document.addEventListener('DOMContentLoaded', loadPosts);
+
+        // For GitHub Pages deployment, you might want to add this function
+        // to actually load markdown files from the posts directory
+        async function loadMarkdownFile(filename) {
+            try {
+                const response = await fetch(`./posts/${filename}`);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const markdown = await response.text();
+                return marked.parse(markdown);
+            } catch (error) {
+                console.error(`Error loading ${filename}:`, error);
+                return null;
+            }
+        }
+
+        // Function to parse markdown frontmatter (for real implementation)
+        function parseFrontmatter(markdown) {
+            const frontmatterRegex = /^---\s*\n(.*?)\n---\s*\n(.*)/s;
+            const match = markdown.match(frontmatterRegex);
+            
+            if (!match) {
+                return { metadata: {}, content: markdown };
+            }
+            
+            const frontmatter = match[1];
+            const content = match[2];
+            const metadata = {};
+            
+            frontmatter.split('\n').forEach(line => {
+                const [key, ...values] = line.split(':');
+                if (key && values.length) {
+                    const value = values.join(':').trim();
+                    metadata[key.trim()] = value.replace(/^["']|["']$/g, '');
+                }
+            });
+            
+            return { metadata, content };
+        }
     </script>
 </body>
 </html>
