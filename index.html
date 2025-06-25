@@ -7,26 +7,28 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.4.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/marked@9.1.6/marked.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
     <style>
         :root {
             --primary-color: #578FCA;
             --sky-blue: #87CEEB;
             --white: #FFFFFF;
             --light-gray: #F8F9FA;
-            --text-dark: #2C3E50;
-            --text-light: #6C757D;
-            --shadow: rgba(87, 143, 202, 0.1);
-            --transition: all 0.3s ease;
+            --dark-gray: #6C757D;
+            --text-color: #333333;
+            --bg-color: #FFFFFF;
+            --card-bg: #FFFFFF;
+            --border-color: #E9ECEF;
+            --shadow: 0 2px 10px rgba(87, 143, 202, 0.1);
         }
 
         [data-theme="dark"] {
-            --white: #1a1a1a;
+            --text-color: #E9ECEF;
+            --bg-color: #1a1a1a;
+            --card-bg: #2d2d2d;
+            --border-color: #404040;
             --light-gray: #2d2d2d;
-            --text-dark: #E9ECEF;
-            --text-light: #ADB5BD;
-            --shadow: rgba(0, 0, 0, 0.3);
+            --shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
         }
 
         * {
@@ -36,11 +38,11 @@
         }
 
         body {
-            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-            background-color: var(--white);
-            color: var(--text-dark);
+            font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             line-height: 1.6;
-            transition: var(--transition);
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            transition: all 0.3s ease;
         }
 
         .container {
@@ -50,20 +52,20 @@
         }
 
         /* Header */
-        header {
-            background-color: var(--white);
-            border-bottom: 1px solid var(--light-gray);
+        .header {
+            background-color: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 0;
             position: sticky;
             top: 0;
             z-index: 100;
-            transition: var(--transition);
+            transition: all 0.3s ease;
         }
 
         .header-content {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
         }
 
         .logo {
@@ -71,11 +73,6 @@
             font-weight: 700;
             color: var(--primary-color);
             text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .logo:hover {
-            color: var(--sky-blue);
         }
 
         .theme-toggle {
@@ -86,12 +83,12 @@
             border-radius: 50%;
             cursor: pointer;
             font-size: 1.2rem;
-            transition: var(--transition);
-            width: 45px;
-            height: 45px;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
+            width: 45px;
+            height: 45px;
         }
 
         .theme-toggle:hover {
@@ -100,27 +97,26 @@
             transform: scale(1.1);
         }
 
-        /* Main Content */
-        main {
-            padding: 2rem 0;
-        }
-
-        .blog-title {
+        /* Hero Section */
+        .hero {
             text-align: center;
+            padding: 4rem 0;
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--sky-blue) 100%);
+            color: var(--white);
             margin-bottom: 3rem;
         }
 
-        .blog-title h1 {
+        .hero h1 {
             font-size: 3rem;
             font-weight: 700;
-            color: var(--primary-color);
-            margin-bottom: 0.5rem;
+            margin-bottom: 1rem;
         }
 
-        .blog-title p {
+        .hero p {
             font-size: 1.2rem;
-            color: var(--text-light);
-            font-weight: 400;
+            opacity: 0.9;
+            max-width: 600px;
+            margin: 0 auto;
         }
 
         /* Search */
@@ -128,22 +124,23 @@
             margin-bottom: 3rem;
         }
 
-        .search-container {
-            position: relative;
+        .search-box {
+            width: 100%;
             max-width: 500px;
             margin: 0 auto;
+            position: relative;
         }
 
         .search-input {
             width: 100%;
-            padding: 1rem 1rem 1rem 3rem;
-            border: 2px solid var(--light-gray);
-            border-radius: 25px;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
             font-size: 1rem;
             font-family: 'Pretendard', sans-serif;
-            background-color: var(--white);
-            color: var(--text-dark);
-            transition: var(--transition);
+            background-color: var(--card-bg);
+            color: var(--text-color);
+            transition: all 0.3s ease;
         }
 
         .search-input:focus {
@@ -152,72 +149,80 @@
             box-shadow: 0 0 0 3px rgba(87, 143, 202, 0.1);
         }
 
-        .search-icon {
-            position: absolute;
-            left: 1rem;
-            top: 50%;
-            transform: translateY(-50%);
-            color: var(--text-light);
-            font-size: 1.1rem;
+        /* Loading */
+        .loading {
+            text-align: center;
+            padding: 3rem 0;
+            color: var(--dark-gray);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border-color);
+            border-radius: 50%;
+            border-top-color: var(--primary-color);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
         }
 
         /* Posts Grid */
         .posts-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
             margin-bottom: 3rem;
         }
 
         .post-card {
-            background-color: var(--white);
-            border-radius: 15px;
-            padding: 1.5rem;
-            box-shadow: 0 4px 20px var(--shadow);
-            transition: var(--transition);
-            border: 1px solid var(--light-gray);
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            border: 1px solid var(--border-color);
         }
 
         .post-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 30px var(--shadow);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 25px rgba(87, 143, 202, 0.15);
+        }
+
+        .post-content {
+            padding: 1.5rem;
+        }
+
+        .post-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 0.5rem;
+            line-height: 1.4;
         }
 
         .post-meta {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            font-size: 0.9rem;
-            color: var(--text-light);
             margin-bottom: 1rem;
+            font-size: 0.9rem;
+            color: var(--dark-gray);
         }
 
         .post-date {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
+            background-color: var(--light-gray);
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
         }
 
-        .post-title {
-            font-size: 1.4rem;
-            font-weight: 600;
-            color: var(--text-dark);
-            margin-bottom: 1rem;
-            line-height: 1.4;
-        }
-
-        .post-title a {
-            color: inherit;
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .post-title a:hover {
-            color: var(--primary-color);
-        }
-
-        .post-excerpt {
-            color: var(--text-light);
+        .post-summary {
+            color: var(--dark-gray);
             margin-bottom: 1rem;
             line-height: 1.6;
         }
@@ -229,55 +234,75 @@
         }
 
         .tag {
-            background-color: var(--sky-blue);
+            background-color: var(--primary-color);
             color: var(--white);
-            padding: 0.3rem 0.8rem;
-            border-radius: 15px;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
             font-size: 0.8rem;
             font-weight: 500;
         }
 
-        /* Loading & Error States */
-        .loading {
-            text-align: center;
-            padding: 3rem 0;
-            color: var(--text-light);
+        .tag:nth-child(even) {
+            background-color: var(--sky-blue);
         }
 
-        .loading i {
-            font-size: 2rem;
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 0;
+            color: var(--dark-gray);
+        }
+
+        .empty-state h3 {
+            font-size: 1.5rem;
             margin-bottom: 1rem;
-            animation: spin 1s linear infinite;
         }
 
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .empty-state p {
+            font-size: 1.1rem;
         }
 
-        .error {
+        /* Error State */
+        .error-state {
             text-align: center;
-            padding: 3rem 0;
-            color: var(--text-light);
+            padding: 3rem;
+            background-color: #FFF5F5;
+            border: 1px solid #FED7D7;
+            border-radius: 12px;
+            margin: 2rem 0;
         }
 
-        .no-posts {
+        [data-theme="dark"] .error-state {
+            background-color: #2D1B1B;
+            border-color: #4A1F1F;
+        }
+
+        .error-state h3 {
+            color: #E53E3E;
+            margin-bottom: 1rem;
+        }
+
+        .error-state p {
+            color: var(--dark-gray);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--card-bg);
+            border-top: 1px solid var(--border-color);
+            padding: 2rem 0;
             text-align: center;
-            padding: 3rem 0;
-            color: var(--text-light);
+            color: var(--dark-gray);
+            margin-top: 4rem;
         }
 
-        /* Responsive Design */
+        /* Responsive */
         @media (max-width: 768px) {
-            .container {
-                padding: 0 15px;
+            .hero h1 {
+                font-size: 2rem;
             }
 
-            .blog-title h1 {
-                font-size: 2.5rem;
-            }
-
-            .blog-title p {
+            .hero p {
                 font-size: 1rem;
             }
 
@@ -286,259 +311,353 @@
                 gap: 1.5rem;
             }
 
-            .post-card {
-                padding: 1.25rem;
+            .container {
+                padding: 0 15px;
             }
 
-            .header-content {
-                padding: 0.75rem 0;
-            }
-
-            .logo {
-                font-size: 1.5rem;
+            .post-meta {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.5rem;
             }
         }
 
-        @media (max-width: 480px) {
-            .blog-title h1 {
-                font-size: 2rem;
-            }
+        /* Markdown Content Styles */
+        .post-content .markdown-content {
+            display: none;
+        }
 
-            .search-input {
-                padding: 0.875rem 0.875rem 0.875rem 2.5rem;
-            }
+        .post-content .markdown-content h1,
+        .post-content .markdown-content h2,
+        .post-content .markdown-content h3 {
+            color: var(--primary-color);
+            margin: 1rem 0 0.5rem 0;
+        }
 
-            .search-icon {
-                left: 0.875rem;
-            }
+        .post-content .markdown-content pre {
+            background-color: var(--light-gray);
+            padding: 1rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .post-content .markdown-content code {
+            background-color: var(--light-gray);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-size: 0.9em;
+        }
+
+        .post-content .markdown-content blockquote {
+            border-left: 4px solid var(--primary-color);
+            padding-left: 1rem;
+            margin: 1rem 0;
+            font-style: italic;
+            color: var(--dark-gray);
         }
     </style>
 </head>
 <body>
-    <header>
+    <header class="header">
         <div class="container">
             <div class="header-content">
                 <a href="#" class="logo">Iryleph</a>
                 <button class="theme-toggle" id="themeToggle">
-                    <i class="fas fa-moon"></i>
+                    <span id="themeIcon">🌙</span>
                 </button>
             </div>
         </div>
     </header>
 
-    <main>
+    <section class="hero">
         <div class="container">
-            <div class="blog-title">
-                <h1>Iryleph</h1>
-                <p>leph</p>
-            </div>
+            <h1>Iryleph</h1>
+            <p>Lephy</p>
+        </div>
+    </section>
 
-            <div class="search-section">
-                <div class="search-container">
-                    <i class="fas fa-search search-icon"></i>
-                    <input type="text" class="search-input" id="searchInput" placeholder="포스트 검색...">
-                </div>
+    <main class="container">
+        <section class="search-section">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="포스트 검색...">
             </div>
+        </section>
 
-            <div id="postsContainer">
-                <div class="loading">
-                    <i class="fas fa-spinner"></i>
-                    <p>포스트를 불러오는 중...</p>
-                </div>
-            </div>
+        <div id="loadingState" class="loading">
+            <div class="loading-spinner"></div>
+            <p>포스트를 불러오는 중...</p>
+        </div>
+
+        <div id="errorState" class="error-state" style="display: none;">
+            <h3>포스트를 불러올 수 없습니다</h3>
+            <p>GitHub API 연결에 문제가 있거나 리포지토리에 접근할 수 없습니다.</p>
+        </div>
+
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <h3>포스트가 없습니다</h3>
+            <p>posts 폴더에 마크다운 파일을 추가해보세요!</p>
+        </div>
+
+        <div class="posts-grid" id="postsGrid">
+            <!-- Posts will be loaded here -->
         </div>
     </main>
 
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2025 Iryleph</p>
+        </div>
+    </footer>
+
     <script>
-        // Theme Management
+        // Configuration
+        const CONFIG = {
+            githubUser: 'hatokasio2',
+            githubRepo: 'Iryleph',
+            branch: 'main'
+        };
+
+        // Global variables
+        let allPosts = [];
+        let filteredPosts = [];
+
+        // DOM elements
+        const loadingState = document.getElementById('loadingState');
+        const errorState = document.getElementById('errorState');
+        const emptyState = document.getElementById('emptyState');
+        const postsGrid = document.getElementById('postsGrid');
+        const searchInput = document.getElementById('searchInput');
         const themeToggle = document.getElementById('themeToggle');
-        const body = document.body;
-        const themeIcon = themeToggle.querySelector('i');
+        const themeIcon = document.getElementById('themeIcon');
 
-        // Load saved theme
-        const savedTheme = localStorage.getItem('theme') || 'light';
-        setTheme(savedTheme);
-
-        themeToggle.addEventListener('click', () => {
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            setTheme(newTheme);
-            localStorage.setItem('theme', newTheme);
-        });
-
-        function setTheme(theme) {
-            body.setAttribute('data-theme', theme);
-            themeIcon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+        // Theme management
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
         }
 
-        // Posts Management
-        let allPosts = [];
-        let displayedPosts = [];
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            document.documentElement.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
 
-        // Sample posts data (replace with actual markdown loading)
-        const samplePosts = [
-            {
-                title: "1",
-                date: "2020-01-01",
-                excerpt: "Lorem ipsum odor amet, consectetuer adipiscing elit.",
-                tags: ["NaN"],
-                filename: "first-post.md"
-            },
-            {
-                title: "2",
-                date: "2020-01-01",
-                excerpt: "Finibus platea vel ligula urna.",
-                tags: ["JavaScript", "개발", "비동기"],
-                filename: "javascript-async.md"
-            },
-            {
-                title: "Phasellus pharetra pulvinar dis.",
-                date: "2020-01-01",
-                excerpt: "React 애플리케이션의 성능을 향상시키는 다양한 방법들을 소개합니다.",
-                tags: ["React", "성능", "최적화"],
-                filename: "react-optimization.md"
-            },
-            {
-                title: "Dis et sociosqu sed.",
-                date: "2020-01-01",
-                excerpt: "모든 사용자가 웹을 이용할 수 있도록 하는 웹 접근성에 대해 알아봅니다.",
-                tags: ["접근성", "웹개발", "UX"],
-                filename: "web-accessibility.md"
-            }
-        ];
+        function updateThemeIcon(theme) {
+            themeIcon.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
 
-        // Load posts from markdown files
-        async function loadPosts() {
-            const postsContainer = document.getElementById('postsContainer');
+        // Front Matter parsing
+        function parseFrontMatter(content) {
+            const frontMatterRegex = /^---\s*\n([\s\S]*?)\n---\s*\n([\s\S]*)$/;
+            const match = content.match(frontMatterRegex);
             
+            if (match) {
+                const yamlContent = match[1];
+                const markdownBody = match[2];
+                
+                const metadata = {};
+                const lines = yamlContent.split('\n');
+                
+                lines.forEach(line => {
+                    if (line.includes(':')) {
+                        const [key, ...values] = line.split(':');
+                        let value = values.join(':').trim();
+                        
+                        // Remove quotes
+                        value = value.replace(/^["']|["']$/g, '');
+                        
+                        // Handle arrays
+                        if (value.startsWith('[') && value.endsWith(']')) {
+                            value = value.slice(1, -1)
+                                .split(',')
+                                .map(v => v.trim().replace(/["']/g, ''));
+                        }
+                        
+                        metadata[key.trim()] = value;
+                    }
+                });
+                
+                return {
+                    metadata,
+                    content: markdownBody,
+                    html: marked.parse(markdownBody)
+                };
+            }
+            
+            return {
+                metadata: {},
+                content: content,
+                html: marked.parse(content)
+            };
+        }
+
+        // GitHub API functions
+        async function fetchPosts() {
             try {
-                // In a real implementation, you would fetch the list of markdown files
-                // from your posts directory. For now, we'll use the sample data
-                allPosts = samplePosts;
-                displayedPosts = [...allPosts];
+                showLoading();
+                
+                const apiUrl = `https://api.github.com/repos/${CONFIG.githubUser}/${CONFIG.githubRepo}/contents/posts`;
+                const response = await fetch(apiUrl);
+                
+                if (!response.ok) {
+                    throw new Error(`GitHub API error: ${response.status}`);
+                }
+                
+                const files = await response.json();
+                const markdownFiles = files.filter(file => 
+                    file.name.endsWith('.md') && file.type === 'file'
+                );
+                
+                if (markdownFiles.length === 0) {
+                    showEmptyState();
+                    return;
+                }
+                
+                const posts = await Promise.all(
+                    markdownFiles.map(async (file) => {
+                        try {
+                            const contentResponse = await fetch(file.download_url);
+                            const content = await contentResponse.text();
+                            const parsed = parseFrontMatter(content);
+                            
+                            return {
+                                filename: file.name,
+                                title: parsed.metadata.title || file.name.replace('.md', ''),
+                                date: parsed.metadata.date || new Date().toISOString().split('T')[0],
+                                tags: parsed.metadata.tags || [],
+                                summary: parsed.metadata.summary || parsed.content.substring(0, 150) + '...',
+                                content: parsed.content,
+                                html: parsed.html,
+                                url: file.html_url
+                            };
+                        } catch (error) {
+                            console.error(`Error loading post ${file.name}:`, error);
+                            return null;
+                        }
+                    })
+                );
+                
+                allPosts = posts.filter(post => post !== null);
                 
                 // Sort by date (newest first)
-                displayedPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
+                allPosts.sort((a, b) => new Date(b.date) - new Date(a.date));
                 
-                // Show only 4 most recent posts
-                displayedPosts = displayedPosts.slice(0, 4);
+                // Take only the 4 most recent posts
+                filteredPosts = allPosts.slice(0, 4);
                 
-                renderPosts();
+                if (filteredPosts.length === 0) {
+                    showEmptyState();
+                } else {
+                    renderPosts(filteredPosts);
+                }
                 
             } catch (error) {
-                console.error('Error loading posts:', error);
-                postsContainer.innerHTML = `
-                    <div class="error">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <p>포스트를 불러오는 중 오류가 발생했습니다.</p>
-                        <p>posts 폴더에 마크다운 파일이 있는지 확인해주세요.</p>
-                    </div>
-                `;
+                console.error('Error fetching posts:', error);
+                showError();
             }
         }
 
-        // Render posts
-        function renderPosts() {
-            const postsContainer = document.getElementById('postsContainer');
+        // UI functions
+        function showLoading() {
+            loadingState.style.display = 'block';
+            errorState.style.display = 'none';
+            emptyState.style.display = 'none';
+            postsGrid.style.display = 'none';
+        }
+
+        function showError() {
+            loadingState.style.display = 'none';
+            errorState.style.display = 'block';
+            emptyState.style.display = 'none';
+            postsGrid.style.display = 'none';
+        }
+
+        function showEmptyState() {
+            loadingState.style.display = 'none';
+            errorState.style.display = 'none';
+            emptyState.style.display = 'block';
+            postsGrid.style.display = 'none';
+        }
+
+        function renderPosts(posts) {
+            loadingState.style.display = 'none';
+            errorState.style.display = 'none';
+            emptyState.style.display = 'none';
+            postsGrid.style.display = 'grid';
             
-            if (displayedPosts.length === 0) {
-                postsContainer.innerHTML = `
-                    <div class="no-posts">
-                        <i class="fas fa-file-alt"></i>
-                        <p>검색 결과가 없습니다.</p>
-                    </div>
-                `;
-                return;
-            }
-
-            const postsHTML = displayedPosts.map(post => `
-                <div class="post-card">
-                    <div class="post-meta">
-                        <div class="post-date">
-                            <i class="fas fa-calendar-alt"></i>
-                            ${formatDate(post.date)}
+            postsGrid.innerHTML = posts.map(post => `
+                <article class="post-card">
+                    <div class="post-content">
+                        <h2 class="post-title">${escapeHtml(post.title)}</h2>
+                        <div class="post-meta">
+                            <span class="post-date">${formatDate(post.date)}</span>
                         </div>
+                        <p class="post-summary">${escapeHtml(post.summary)}</p>
+                        ${post.tags && post.tags.length > 0 ? `
+                        <div class="post-tags">
+                            ${post.tags.map(tag => `<span class="tag">${escapeHtml(tag)}</span>`).join('')}
+                        </div>
+                        ` : ''}
+                        <div class="markdown-content">${post.html}</div>
                     </div>
-                    <h2 class="post-title">
-                        <a href="./posts/${post.filename}">${post.title}</a>
-                    </h2>
-                    <p class="post-excerpt">${post.excerpt}</p>
-                    <div class="post-tags">
-                        ${post.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-                    </div>
-                </div>
+                </article>
             `).join('');
-
-            postsContainer.innerHTML = `<div class="posts-grid">${postsHTML}</div>`;
-        }
-
-        // Format date
-        function formatDate(dateString) {
-            const date = new Date(dateString);
-            const options = { year: 'numeric', month: 'long', day: 'numeric' };
-            return date.toLocaleDateString('ko-KR', options);
         }
 
         // Search functionality
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', (e) => {
-            const searchTerm = e.target.value.toLowerCase();
-            
-            if (searchTerm === '') {
-                displayedPosts = [...allPosts].slice(0, 4);
+        function searchPosts(query) {
+            if (!query.trim()) {
+                filteredPosts = allPosts.slice(0, 4);
             } else {
-                displayedPosts = allPosts.filter(post => 
-                    post.title.toLowerCase().includes(searchTerm) ||
-                    post.excerpt.toLowerCase().includes(searchTerm) ||
-                    post.tags.some(tag => tag.toLowerCase().includes(searchTerm))
-                );
+                const lowercaseQuery = query.toLowerCase();
+                filteredPosts = allPosts.filter(post => 
+                    post.title.toLowerCase().includes(lowercaseQuery) ||
+                    post.content.toLowerCase().includes(lowercaseQuery) ||
+                    (post.tags && post.tags.some(tag => 
+                        tag.toLowerCase().includes(lowercaseQuery)
+                    ))
+                ).slice(0, 4);
             }
             
-            renderPosts();
+            if (filteredPosts.length === 0) {
+                showEmptyState();
+            } else {
+                renderPosts(filteredPosts);
+            }
+        }
+
+        // Utility functions
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function formatDate(dateString) {
+            const date = new Date(dateString);
+            return date.toLocaleDateString('ko-KR', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        // Event listeners
+        themeToggle.addEventListener('click', toggleTheme);
+
+        searchInput.addEventListener('input', (e) => {
+            searchPosts(e.target.value);
         });
 
-        // Load posts when page loads
-        document.addEventListener('DOMContentLoaded', loadPosts);
-
-        // For GitHub Pages deployment, you might want to add this function
-        // to actually load markdown files from the posts directory
-        async function loadMarkdownFile(filename) {
-            try {
-                const response = await fetch(`./posts/${filename}`);
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                const markdown = await response.text();
-                return marked.parse(markdown);
-            } catch (error) {
-                console.error(`Error loading ${filename}:`, error);
-                return null;
-            }
-        }
-
-        // Function to parse markdown frontmatter (for real implementation)
-        function parseFrontmatter(markdown) {
-            const frontmatterRegex = /^---\s*\n(.*?)\n---\s*\n(.*)/s;
-            const match = markdown.match(frontmatterRegex);
-            
-            if (!match) {
-                return { metadata: {}, content: markdown };
-            }
-            
-            const frontmatter = match[1];
-            const content = match[2];
-            const metadata = {};
-            
-            frontmatter.split('\n').forEach(line => {
-                const [key, ...values] = line.split(':');
-                if (key && values.length) {
-                    const value = values.join(':').trim();
-                    metadata[key.trim()] = value.replace(/^["']|["']$/g, '');
-                }
-            });
-            
-            return { metadata, content };
-        }
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            fetchPosts();
+        });
     </script>
 </body>
 </html>
